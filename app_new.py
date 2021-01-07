@@ -7,9 +7,9 @@ from requests.exceptions import ConnectionError
 import random
 from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
-import multiprocess
-import tqdm
-import plotly.graph_objects as go
+#import multiprocess
+#import tqdm
+#import plotly.graph_objects as go
 import base64
 from io import BytesIO
 
