@@ -403,6 +403,7 @@ df = pd.DataFrame(
        columns=(
            "url",
            "primary_flag",
+           "secondary_flag",
            "redirect",
            "status",
            "bu",
