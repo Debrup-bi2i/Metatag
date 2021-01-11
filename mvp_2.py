@@ -589,7 +589,7 @@ if user_input!="":
      
 t2=time.time()
 t=t2-t1
-st.write(round(t,2))
+st.write("time taken:",round(t,2))
 st.write(metatag_ref)
 st.write("This is the metatags of:",main_url,"to be used for reference")
 st.write("Primary Flag indicates if the first seven metatag matches with the US-English local variant of the webpage.")
