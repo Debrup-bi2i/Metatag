@@ -596,7 +596,7 @@ st.write("Primary Flag indicates if the first seven metatag matches with the US-
 st.write("Secondary Flag indicates if the last 4 metatags are empty or non-empty.")
 #st.dataframe(df2.style.applymap(color_green),100,50)
 #st.table(df)
-st.write(df.style.applymap(color_bu,
+st.table(df.style.applymap(color_bu,
                            pd.IndexSlice[:,['bu']]).applymap(color_webs,
                                                              pd.IndexSlice[:,['web_section_id']]).applymap(color_pg,
                                                                                                            pd.IndexSlice[:,['page_content']]).applymap(color_seg,
