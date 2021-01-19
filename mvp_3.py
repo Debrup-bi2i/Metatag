@@ -605,6 +605,9 @@ if user_input!="" and input_valid(user_input):
     df['Primary_Flag']=df.primary_flag
     df['Secondary_Flag']=df.secondary_flag
     df = df[col_order]
+else:
+    st.write('Please Enter a Valid URL!')
+    
     
 t2=time.time()
 t=t2-t1
