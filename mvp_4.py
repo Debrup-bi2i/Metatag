@@ -539,6 +539,22 @@ def color_title(val):
     
     color ='#C3E6CB' if val == metatag_ref.loc[1,'simple_title'] else '#e3b468'
     return 'background-color: %s' % color
+def color_web(val):
+    
+    color ='#C3E6CB' if val == metatag_ref.loc[1,'hp_design_version'] else '#e3b468'
+    return 'background-color: %s' % color
+def color_pl(val):
+    
+    color ='#C3E6CB' if val == metatag_ref.loc[1,'page_level'] else '#e3b468'
+    return 'background-color: %s' % color
+def color_type(val):
+    
+    color ='#C3E6CB' if val == metatag_ref.loc[1,'product_type'] else '#e3b468'
+    return 'background-color: %s' % color
+def color_fam(val):
+    
+    color ='#C3E6CB' if val == metatag_ref.loc[1,'family'] else '#e3b468'
+    return 'background-color: %s' % color
 def color_green(val):
     
     color ='#C3E6CB' if val in list(metatag_ref.iloc[0,].astype(str)) else '#e3b468'
