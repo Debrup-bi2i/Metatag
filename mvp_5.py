@@ -756,41 +756,53 @@ st.write("Secondary Flag indicates if the last 4 metatags are empty or non-empty
 #st.dataframe(df2.style.applymap(color_green),100,50)
 tmp_download_link = download_link(df, 'check.csv', 'Click here to download your data!')
 st.markdown(tmp_download_link, unsafe_allow_html=True)
-s#t.table(df)
+#st.table(df)
 def highlight_greaterthan(x):
     if (x.Secondary_Flag == '1') & (x.Primary_Flag>0):
         return ['background-color: #93d2a2']*df.shape[1]
     else:
         return ['background-color: white']*df.shape[1]
 #st.table(df.style.apply(highlight_greaterthan, axis=1))
+try:
+    if 'hpweb.1' in dict_metatag['hp_design_version']:
+        obj=df.style.apply(highlight_greaterthan, axis=1).applymap(color_bu,
+                                pd.IndexSlice[:,['bu']]).applymap(color_webs,
+                                                                  pd.IndexSlice[:,['web_section_id']]).applymap(color_pg,
+                                                                                                                pd.IndexSlice[:,['page_content']]).applymap(color_seg,
+                                                                                                                                                            pd.IndexSlice[:,['segment']]).applymap(color_lc,
+                                                                                                                                                                                                  pd.IndexSlice[:,['lifecycle']]).applymap(color_user,pd.IndexSlice[:,['user_profile']]).applymap(color_title,
+                                                                                                                                                                                                                                                                                                            pd.IndexSlice[:,['simple_title']]).applymap(color_green_1,
+                                                                                                                                                                                                                                                                                                                                                                  pd.IndexSlice[:,['sub_bu','analytics_template_name','product_service_name','analytics_section']]).applymap(color_sec_flag,
+                                                                  pd.IndexSlice[:,['Secondary_Flag']]).applymap(color_prim_flag,
+                                                                  pd.IndexSlice[:,['Primary_Flag']])
 
-if 'hpweb.1' in dict_metatag['hp_design_version']:
-    obj=df.style.apply(highlight_greaterthan, axis=1).applymap(color_bu,
-                            pd.IndexSlice[:,['bu']]).applymap(color_webs,
-                                                              pd.IndexSlice[:,['web_section_id']]).applymap(color_pg,
-                                                                                                            pd.IndexSlice[:,['page_content']]).applymap(color_seg,
-                                                                                                                                                        pd.IndexSlice[:,['segment']]).applymap(color_lc,
-                                                                                                                                                                                              pd.IndexSlice[:,['lifecycle']]).applymap(color_user,pd.IndexSlice[:,['user_profile']]).applymap(color_title,
-                                                                                                                                                                                                                                                                                                        pd.IndexSlice[:,['simple_title']]).applymap(color_green_1,
-                                                                                                                                                                                                                                                                                                                                                              pd.IndexSlice[:,['sub_bu','analytics_template_name','product_service_name','analytics_section']]).applymap(color_sec_flag,
-                                                              pd.IndexSlice[:,['Secondary_Flag']]).applymap(color_prim_flag,
-                                                              pd.IndexSlice[:,['Primary_Flag']])
 
-    
-else:    
+    else:    
+        obj=df.style.apply(highlight_greaterthan, axis=1).applymap(color_bu,
+                                pd.IndexSlice[:,['bu']]).applymap(color_webs,
+                                                                  pd.IndexSlice[:,['web_section_id']]).applymap(color_pg,
+                                                                                                                pd.IndexSlice[:,['page_content']]).applymap(color_seg,
+                                                                                                                                                            pd.IndexSlice[:,['segment']]).applymap(color_lc,
+                                                                                                                                                                                                  pd.IndexSlice[:,['lifecycle']]).applymap(color_user,pd.IndexSlice[:,['user_profile']]).applymap(color_title,
+                                                                                                                                                                                                                                                                                                            pd.IndexSlice[:,['simple_title']]).applymap(color_green_1,
+                                                                                                                                                                                                                                                                                                                                                                  pd.IndexSlice[:,['sub_bu','analytics_template_name','product_service_name','analytics_section']]).applymap(color_sec_flag,
+                                                                  pd.IndexSlice[:,['Secondary_Flag']]).applymap(color_prim_flag,
+                                                                  pd.IndexSlice[:,['Primary_Flag']]).applymap(color_web,
+                                                                                                              pd.IndexSlice[:,['hp_design_version']]).applymap(color_pl,
+                                                                                                                                                                pd.IndexSlice[:,['page_level']]).applymap(color_type,
+                                                                                                                                                                pd.IndexSlice[:,['product_type']]).applymap(color_fam,
+                                                                                                                                                                pd.IndexSlice[:,['family']])
+except:
     obj=df.style.apply(highlight_greaterthan, axis=1).applymap(color_bu,
-                            pd.IndexSlice[:,['bu']]).applymap(color_webs,
-                                                              pd.IndexSlice[:,['web_section_id']]).applymap(color_pg,
-                                                                                                            pd.IndexSlice[:,['page_content']]).applymap(color_seg,
-                                                                                                                                                        pd.IndexSlice[:,['segment']]).applymap(color_lc,
-                                                                                                                                                                                              pd.IndexSlice[:,['lifecycle']]).applymap(color_user,pd.IndexSlice[:,['user_profile']]).applymap(color_title,
-                                                                                                                                                                                                                                                                                                        pd.IndexSlice[:,['simple_title']]).applymap(color_green_1,
-                                                                                                                                                                                                                                                                                                                                                              pd.IndexSlice[:,['sub_bu','analytics_template_name','product_service_name','analytics_section']]).applymap(color_sec_flag,
-                                                              pd.IndexSlice[:,['Secondary_Flag']]).applymap(color_prim_flag,
-                                                              pd.IndexSlice[:,['Primary_Flag']]).applymap(color_web,
-                                                                                                          pd.IndexSlice[:,['hp_design_version']]).applymap(color_pl,
-                                                                                                                                                            pd.IndexSlice[:,['page_level']]).applymap(color_type,
-                                                                                                                                                            pd.IndexSlice[:,['product_type']]).applymap(color_fam,
-                                                                                                                                                            pd.IndexSlice[:,['family']])
-                                                                                                           
+                                pd.IndexSlice[:,['bu']]).applymap(color_webs,
+                                                                  pd.IndexSlice[:,['web_section_id']]).applymap(color_pg,
+                                                                                                                pd.IndexSlice[:,['page_content']]).applymap(color_seg,
+                                                                                                                                                            pd.IndexSlice[:,['segment']]).applymap(color_lc,
+                                                                                                                                                                                                  pd.IndexSlice[:,['lifecycle']]).applymap(color_user,pd.IndexSlice[:,['user_profile']]).applymap(color_title,
+                                                                                                                                                                                                                                                                                                            pd.IndexSlice[:,['simple_title']]).applymap(color_green_1,
+                                                                                                                                                                                                                                                                                                                                                                  pd.IndexSlice[:,['sub_bu','analytics_template_name','product_service_name','analytics_section']]).applymap(color_sec_flag,
+                                                                  pd.IndexSlice[:,['Secondary_Flag']]).applymap(color_prim_flag,
+                                                                  pd.IndexSlice[:,['Primary_Flag']])
+
+
 st.table(obj)
