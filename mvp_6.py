@@ -657,7 +657,7 @@ try:
         try:
             if 'hpweb.1' in dict_metatag['hp_design_version']:
                 
-                #st.write('time taken:',t)
+                st.write('time taken:',t)
                 #st.table(df.style.apply(highlight_greaterthan, axis=1).applymap(color_bu, pd.IndexSlice[:,['bu']]))
                 st.table(df.style.apply(highlight_greaterthan, axis=1).applymap(color_bu,
                             pd.IndexSlice[:,['bu']]).applymap(color_webs,
