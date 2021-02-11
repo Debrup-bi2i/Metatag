@@ -181,6 +181,8 @@ def path_extrt(url):
     for i in l1[5:]:
             fr = i
             sc = sc + "/" + fr
+    if sc=='':
+        sc='.html'
     for i in l1[5:]:
             fr_2 = i
             fl_nm = fl_nm + "_" + fr_2        
@@ -640,7 +642,7 @@ try:
         
         df['Primary_Flag']=df.primary_flag
         df['Secondary_Flag']=df.secondary_flag
-        st.write('ok')
+        
         try:
             if 'hpweb.1' in dict_metatag['hp_design_version']:
                 df=df[col_order]
@@ -688,7 +690,7 @@ try:
                                                                                                                                                             pd.IndexSlice[:,['family']]))
                                                                                                                                               
         except:
-            st.write('time taken:',t)
+            
             st.table(df.style.apply(highlight_greaterthan, axis=1).applymap(color_bu,
                             pd.IndexSlice[:,['bu']]).applymap(color_webs,
                                                               pd.IndexSlice[:,['web_section_id']]).applymap(color_pg,
