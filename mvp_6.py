@@ -688,6 +688,7 @@ try:
                                                                                                                                                             pd.IndexSlice[:,['family']]))
                                                                                                                                               
         except:
+            st.write('time taken:',t)
             st.table(df.style.apply(highlight_greaterthan, axis=1).applymap(color_bu,
                             pd.IndexSlice[:,['bu']]).applymap(color_webs,
                                                               pd.IndexSlice[:,['web_section_id']]).applymap(color_pg,
