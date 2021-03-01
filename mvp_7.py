@@ -754,10 +754,11 @@ def highlight_greaterthan(x):
 t1=time.time()
 st.set_page_config(layout="wide")
 st.title("Meta-tag Validator")
+left_column, right_column = st.beta_columns(2)
 st.markdown("## " + 'Locale validation/Folder Validation')	
-st.markdown("#### " +"What validation would you like to do?")
+left_column.write("## What validation would you like to do?")
 
-selected_metrics = st.selectbox(
+selected_metrics = right_column.selectbox(
     label="Choose...", options=['Locale','Folder']
 )
 my_slot1 = st.empty()
