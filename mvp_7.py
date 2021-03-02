@@ -753,13 +753,13 @@ def highlight_greaterthan(x):
         return ['background-color: white']*df.shape[1]    
 t1=time.time()
 st.set_page_config(layout="wide")
-st.title("Meta-tag Validator")
+st.title("Meta-tag Explorer")
 left_column, right_column = st.beta_columns(2)
-st.markdown("## " + 'Locale validation/Folder Validation')	
-left_column.write("## What validation would you like to do?")
+#st.markdown("## " + 'Locale validation/Folder Validation')	
+left_column.write("# What would you like to do?")
 
 selected_metrics = right_column.selectbox(
-    label="Choose...", options=['Locale','Folder']
+    label="Choose...", options=['Locale Validadtion','Folder Extraction']
 )
 my_slot1 = st.empty()
 my_slot1.write("# Please Input Master URL")
@@ -773,7 +773,7 @@ def download_link(object_to_download, download_filename, download_link_text):
     b64 = base64.b64encode(object_to_download.encode()).decode()
 
     return f'<a href="data:file/txt;base64,{b64}" download="{download_filename}">{download_link_text}</a>'
-if selected_metrics=='Locale':
+if selected_metrics=='Locale Validation':
     
     url=user_input
     if st.button('start'):
@@ -977,7 +977,7 @@ if selected_metrics=='Locale':
                     
         except:
             st.write("Process Error!")
-if selected_metrics=='Folder':
+if selected_metrics=='Folder Extraction':
     url=user_input
     if st.button('start'):
         t1=time.time()
