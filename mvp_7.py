@@ -409,7 +409,9 @@ def path_extrt(url):
             sc = sc + "/" + fr
     for i in l1[5:]:
             fr_2 = i
-            fl_nm = fl_nm + "_" + fr_2        
+            fl_nm = fl_nm + "_" + fr_2
+    if fl_nm=="_":
+        fl_nm=l1[4]
     dom = l1[0]+'//'+l1[2]+"/"
     if sc=='' and dom !='https://store.hp.com/' :
         sc='.html'
