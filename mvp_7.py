@@ -1064,7 +1064,8 @@ if selected_metrics=='Folder Extraction':
             
             for row in res:
                 df = df.append(row)
-            
+        df['index'] = list(range(len(df.index)))
+        df=df.set_index('index')     
         my_slot1.write('# Finished')
         t2=time.time()
         st.write('time taken:',t2-t1)
@@ -1084,6 +1085,8 @@ if selected_metrics=='Folder Extraction':
                 "product_service_name",
                 "analytics_section"
                 ]]
+            tmp_download_link = download_link(df, path_extrt(url)[2]+'.csv', 'Click here to download your data!')    
+            st.markdown(tmp_download_link, unsafe_allow_html=True)
             st.table(df)
         except:
             st.write('No Sub-folder availabe!')
