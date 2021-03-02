@@ -761,7 +761,7 @@ left_column, right_column = st.beta_columns(2)
 left_column.write("# What would you like to do?")
 
 selected_metrics = right_column.selectbox(
-    label="Choose...", options=['Locale Validadtion','Folder Extraction']
+    label="Choose...", options=['Locale Validation','Folder Extraction']
 )
 my_slot1 = st.empty()
 my_slot1.write("# Please Input Master URL")
