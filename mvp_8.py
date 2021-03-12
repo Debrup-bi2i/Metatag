@@ -1005,9 +1005,10 @@ if selected_metrics=='Locale validation':
         except:
             st.write("Process Error!")
 elif selected_metrics=='Folder Extraction':
-    url=user_input
+    aa=user_input
     if st.button('start'):
         t1=time.time()
+        my_slot1.image(image3,width=None)
         token=str(random.randint(0,1000))
         headers = { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36',
 
@@ -1015,73 +1016,33 @@ elif selected_metrics=='Folder Extraction':
                     'postman-token': token
                     }
         #st.write('ok')
+        pattern=r"^https://[a-zA-Z0-9]+\.[hp]+\.com/[a-z]+\-[a-z]+"
+        pattern1=r"^https://[a-zA-Z0-9]+\.[hp]+\.com/[a-z]+\/[a-z]+"
         try:
-           
-            r1=requests.get(url,headers=headers,timeout=30)
-            if r1.status_code==200:
-                htmlcontent = r1.content
-            ##print(htmlcontent)
-                soup = BeautifulSoup(htmlcontent, "html.parser")
-                
-                for link in soup.find_all("meta"):
-                    if link.get("name") != None:
-                        if link.get("name") in [
-                            "bu",
-                            "sub_bu",
-                            "web_section_id",
-                            "page_content",
-                            "segment",
-                            "lifecycle",
-                            "user_profile",
-                            "simple_title",
-                            "analytics_template_name",
-                            "product_service_name",
-                            "analytics_section",
-                            "hp_design_version",
-                            "page_level",
-                            "product_type",
-                            "family"]:
-                            dict_metatag.add(link.get("name"), link.get("content"))
-                #print(dict_metatag)
-                columns=[   "master_url",
-                            "bu",
-                            "web_section_id",
-                            "page_content",
-                            "segment",
-                            "lifecycle",
-                            "user_profile",
-                            "hp_design_version",
-                            "simple_title",
-                            "analytics_template_name",
-                            "product_service_name",
-                            "analytics_section",
-                            "sub_bu"
-                            ]
-                for col in metatag_ref.columns:
-                    if col == "master_url":
-                        metatag_ref.loc[1, col] = url
-                    else:
-                        try:
-                            metatag_ref.loc[1, col]=dict_metatag[col]
-                        except:
-                            metatag_ref.loc[1, col]=""
-                metatag_ref=metatag_ref[columns]
-                st.write(metatag_ref)
-                                  
-                st.write("This is the metatags of:",url,"to be used for reference.Values highlighted only indicate the match against the master URL metaTag, does not imply the value itself is correct for that page, WW Analytics standards should be used when analysing the results.")
+            site=re.findall(pattern,aa)[0]+"/sitemap"
         except:
-            st.write('master url not working!')
-            
-        internal_urls = set()
-        external_urls = set()
-        #url='https://store.hp.com/us/en/vwa/business-solutions/bizcat=Workstation;proc=Intel-Xeon?jumpid=ma_home_featured_na_3_210221'
-        total_urls_visited=0
-        my_slot1.image(image2,width=None)
-        crawl(url)
+            site=re.findall(pattern1,aa)[0]+"/sitemap"
+        r = requests.get(site,headers=headers,timeout=30) 
+        if r.status_code!=200:
+            try:
+                site=site+".html"
+                r=requests.get(site,headers=headers,timeout=30)
+            except:
+                print("try other!")
+            # converting the text 
+        
+        print(site)
+        s = BeautifulSoup(r.text,"html.parser") 
         folder_list=list()
-        for i in internal_urls:
-            if url.replace('.html','') in i or url.replace('.aspx','') in i:
-                folder_list.append(i)    
+        for i in s.find_all("a"):
+            #print(i.get("href"))
+            try:
+                if aa in i.get("href"):
+                    folder_list.append(i.get("href"))
+            except:
+                pass
+        
+          
         
         res=[]
         df=pd.DataFrame()
@@ -1091,8 +1052,10 @@ elif selected_metrics=='Folder Extraction':
             
             for row in res:
                 df = df.append(row)
+        
         df['index'] = list(range(len(df.index)))
-        df=df.set_index('index')      
+        df=df.set_index('index')  
+        
         my_slot1.image(image3,width=None)
         t2=time.time()
         st.write('time taken:',t2-t1)
@@ -1113,7 +1076,7 @@ elif selected_metrics=='Folder Extraction':
                 "product_service_name",
                 "analytics_section"
                 ]]
-            tmp_download_link = download_link(df, path_extrt(url)[2]+'.csv', 'Click here to download your data!')    
+            tmp_download_link = download_link(df, aa+'.csv', 'Click here to download your data!')    
             st.markdown(tmp_download_link, unsafe_allow_html=True)
         
             st.table(df)
