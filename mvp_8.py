@@ -1008,7 +1008,7 @@ elif selected_metrics=='Folder Extraction':
     aa=user_input
     if st.button('start'):
         t1=time.time()
-        my_slot1.image(image3,width=None)
+        my_slot1.image(image2,width=None)
         token=str(random.randint(0,1000))
         headers = { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36',
 
@@ -1018,20 +1018,52 @@ elif selected_metrics=='Folder Extraction':
         #st.write('ok')
         pattern=r"^https://[a-zA-Z0-9]+\.[hp]+\.com/[a-z]+\-[a-z]+"
         pattern1=r"^https://[a-zA-Z0-9]+\.[hp]+\.com/[a-z]+\/[a-z]+"
-        try:
-            site=re.findall(pattern,aa)[0]+"/sitemap"
-        except:
-            site=re.findall(pattern1,aa)[0]+"/sitemap"
-        r = requests.get(site,headers=headers,timeout=30) 
-        if r.status_code!=200:
+        if re.search(pattern, aa):
             try:
-                site=site+".html"
-                r=requests.get(site,headers=headers,timeout=30)
+                site=re.findall(pattern,aa)[0]+"/sitemap"
+                r = requests.get(site,headers=headers,timeout=30)
             except:
-                print("try other!")
-            # converting the text 
+                try:
+                    site=site+".html"
+                    r = requests.get(site,headers=headers,timeout=30)
+                    if r.status_code!=200:
+                        site=site+".html"
+                        r = requests.get(site,headers=headers,timeout=30)
+                except:
+                    st.write('input error')
+        else:
+            try:
+                site=re.findall(pattern1,aa)[0]+"/sitemap"
+                r = requests.get(site,headers=headers,timeout=30)
+                if r.status_code!=200:
+                    site=site+".html"
+                    r = requests.get(site,headers=headers,timeout=30)
+                    
+            except:
+                try:
+                    site=site+".html"
+                    r = requests.get(site,headers=headers,timeout=30)
+                except:
+                    st.write('input error')
+        #st.write(site)    
+            
+       #  try:
+       #      site=re.findall(pattern,aa)[0]+"/sitemap"
+       #      r = requests.get(site,headers=headers,timeout=30)
+       #  except:
+       #      try:
+       #          site=re.findall(pattern1,aa)[0]+"/sitemap"
+       #          r = requests.get(site,headers=headers,timeout=30)
+       # # r = requests.get(site,headers=headers,timeout=30) 
+       #  if r.status_code!=200:
+       #      try:
+       #          site=site+".html"
+       #          r=requests.get(site,headers=headers,timeout=30)
+       #      except:
+       #          print("try other!")
+       #      # converting the text 
         
-        print(site)
+        # print(site)
         s = BeautifulSoup(r.text,"html.parser") 
         folder_list=list()
         for i in s.find_all("a"):
@@ -1042,8 +1074,8 @@ elif selected_metrics=='Folder Extraction':
             except:
                 pass
         
-          
-        
+        st.write(site)  
+        st.write("There are total ",len(folder_list)," number of sub-folders available.")
         res=[]
         df=pd.DataFrame()
         with ThreadPoolExecutor(max_workers=20) as T:
