@@ -1,1 +1,1 @@
-web: sh setup.sh && streamlit run mvp_8.py
+web: sh setup.sh && streamlit run mvp_9.py
