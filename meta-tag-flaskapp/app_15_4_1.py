@@ -598,14 +598,15 @@ def do_something(text1):
         #fr, sc=path_extrt(url)[0],path_extrt(url)[1]
         try:
             print('start',url)
-            # with ThreadPoolExecutor(max_workers=20) as T:
-            #     res = list(T.map(tag_extractor_wrap, list_comb, url))
-            #     for row in res:
-            #         df = df.append(row)
-            for i in list_comb[0:5]:
-                res=tag_extractor_wrap(i, url)
-                print('final df',res)
-                df=df.append(res)
+            args = ((b, url) for b in list_comb)
+            with ThreadPoolExecutor(max_workers=20) as T:
+                res = list(T.map(lambda p:tag_extractor_wrap(*p),args))
+                for row in res:
+                   df = df.append(row)
+            # for i in list_comb[0:5]:
+            #     res=tag_extractor_wrap(i, url)
+            #     print('final df',res)
+            #     df=df.append(res)
             #print(df)
             #df=df.to_json()
             print('end',df)
