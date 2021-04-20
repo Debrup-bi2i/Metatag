@@ -458,6 +458,44 @@ def tag_extractor_wrap(cc_ll,master_url):
         print(cc_ll)
         pass
 df = pd.DataFrame()
+col_order=["url",
+"redirect",
+"redirected_url",
+"Primary_Flag",
+"Secondary_Flag",
+"bu",
+"web_section_id",
+"page_content",
+"segment",
+"lifecycle",
+"user_profile",
+"simple_title",
+"hp_design_version",
+"sub_bu",
+"analytics_template_name",
+"product_service_name",
+"analytics_section"
+]
+col_order_1=["url",
+"redirect", 
+"redirected_url",            
+"Primary_Flag",
+"Secondary_Flag",
+"bu",
+"web_section_id",
+"page_content",
+"segment",
+"lifecycle",
+"user_profile",
+"simple_title",
+"hp_design_version",
+"page_level",
+"product_type",
+"family",
+"sub_bu",
+"analytics_template_name",
+"product_service_name",
+"analytics_section"]
 text1=""
 def do_something(text1):
    url = text1
@@ -533,7 +571,7 @@ def do_something(text1):
         #             except:
         #                 metatag_ref=metatag_ref[columns].to_json()
         #                 return(metatag_ref)
-        metatag_ref=metatag_ref.to_json(orinet='index')  
+        metatag_ref=metatag_ref.to_json(orient='index')  
         global res
         df = pd.DataFrame(
        columns=(
@@ -573,7 +611,31 @@ def do_something(text1):
             print('end',df)
             df['index'] = list(range(len(df.index)))
             df=df.set_index('index')
-            df=df.to_json(orinet='index')
+            for i in range(len(df.index)):
+                    t=list()
+                    for col in ["sub_bu",
+                            "analytics_template_name",
+                            "product_service_name",
+                            "analytics_section"]:
+                            t.append(      
+                            df.loc[i,col]=="")
+                           
+                    if all(t):    
+                        df.loc[i,'secondary_flag']="1"
+                    else:    
+                        df.loc[i,'secondary_flag']="0"
+                
+                
+            df['Primary_Flag']=df.primary_flag
+            df['Secondary_Flag']=df.secondary_flag
+            try:
+                    if 'hpweb.1' in dict_metatag['hp_design_version']:
+                        df=df[col_order]
+                    else:
+                        df=df[col_order_1]
+            except:
+                    df=df[col_order]
+            df=df.to_json(orient='index')
         except Exception as error:
             print('exception')
             print(error)
