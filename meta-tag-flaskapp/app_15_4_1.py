@@ -573,7 +573,7 @@ def do_something(text1):
             print('end',df)
             df['index'] = list(range(len(df.index)))
             df=df.set_index('index')
-            df=df.to_json(orinet='index)
+            df=df.to_json(orinet='index')
         except Exception as error:
             print('exception')
             print(error)
