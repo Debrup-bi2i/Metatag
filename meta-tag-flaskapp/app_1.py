@@ -636,6 +636,7 @@ def do_something(text1):
                         df=df[col_order_1]
             except:
                     df=df[col_order]
+            df=df.drop(["redirected_url"],axis=1)
             df=df.to_json(orient='index')
         except Exception as error:
             print('exception')
